@@ -18,6 +18,7 @@ package com.golden.gamedev;
 
 // JFC
 import CheckPoint.CheckPoints;
+
 import java.awt.Graphics2D;
 
 /**
@@ -172,11 +173,17 @@ public abstract class GameEngine extends Game {
 	/** ************************ GAME LOOP THREAD ******************************* */
 	/** ************************************************************************* */
 	
-	void startGameLoop() {
+	void startGameLoop()
+	{
+		System.out.println("+ Mario::GameEngine::startGameLoop()");
+
 		// start the timer
 		this.bsTimer.startTimer();
 		
-		while (this.isRunning()) {
+		while ( this.isRunning() )
+		{
+			System.out.println("+ Mario::GameEngine::startGameLoop() --- Looooooooooooooop");
+
 			// refresh global game state
 			this.bsInput.refresh();
 			this.refresh();
@@ -190,13 +197,11 @@ public abstract class GameEngine extends Game {
 			
 			// get the game object to be played next
 			this.currentGameID.NextLevel = this.nextGameID.NextLevel;
-			this.currentGame = (this.nextGame != null) ? this.nextGame : this
-			        .getGame(this.nextGameID.NextLevel);
+			this.currentGame = (this.nextGame != null) ? this.nextGame : this.getGame(this.nextGameID.NextLevel);
 			
 			if (this.currentGame == null) {
 				// game is not available, exit the game
-				System.err.println("ERROR: GameObject with ID = "
-				        + this.currentGameID + " is not available!!");
+				System.err.println("ERROR: GameObject with ID = " + this.currentGameID + " is not available!!");
 				this.finish();
 				break;
 			}

@@ -7,414 +7,346 @@ import Animations.FallingDeadMario;
 import Animations.FireToSmallMarioAnim;
 import Animations.SmallToBigMarioAnim;
 import SandBox.Mario;
+
 import com.golden.gamedev.object.AnimatedSprite;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.Timer;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+public class Player extends AnimatedSprite
+{
+	public boolean Water = false ;
+	int swimmDelay = 4 ;
 
-    public class Player extends AnimatedSprite{
+	int delay = 500; // time to play
+	int Fps = 2; // prame play per second
+	BufferedImage[] BigBlackMario = new BufferedImage[12];
+	BufferedImage[] FirePlayer    = new BufferedImage[12];
+	BufferedImage[] BigGreenMario = new BufferedImage[12];
+	BufferedImage[] BigRedMario   = new BufferedImage[12];
+	private  BufferedImage[] SmallBlackMario = new BufferedImage[12];
+	private  BufferedImage[] player2         = new BufferedImage[12];
+	private  BufferedImage[] SmallGreenMario = new BufferedImage[12];
+	private  BufferedImage[] SmallRedMario   = new BufferedImage[12];
+	private int currentFrame = 1;
+	int type = 1; // small mario gets star, 2 = small to big
 
-    public boolean Water = false ;
-    int swimmDelay = 4 ;
-    
-    int delay = 500 ; // time to play
-    int Fps = 2 ; // prame play per second
-    BufferedImage[] BigBlackMario = new BufferedImage[12];
-    BufferedImage[] FirePlayer = new BufferedImage[12];
-    BufferedImage[] BigGreenMario = new BufferedImage[12];
-    BufferedImage[] BigRedMario = new BufferedImage[12];
-    private  BufferedImage[] SmallBlackMario = new BufferedImage[12];
-    private  BufferedImage[] player2 = new BufferedImage[12];
-    private  BufferedImage[] SmallGreenMario = new BufferedImage[12];
-    private  BufferedImage[] SmallRedMario = new BufferedImage[12];
-    private int currentFrame = 1;
-    int type = 1 ; // small mario gets star , 2 = small to big
-    
-    
-    int Frame = 1 ;
-    int something = 1 ;
-    
-    public int speed = 0 ;
-    boolean breaks = true ;
-    public boolean OnGround = true ;
-    
-    float Gravity = 0 ;
-    
-    boolean turbo = false ;
-    private boolean LeftActivated = false;
-    private boolean RightActivated = true;
-    private boolean skating = false ;
-    
-    Mario game ;
-    
-    int invincible = 0 ;
+	int Frame = 1;
+	int something = 1;
 
-    boolean blink = true ;
-    private int Life = 0 ;
-    private boolean ControlleByKeyboard = true;;
-    private boolean AutomaticMoveForward = false;;
-    private boolean Star;
-    public boolean KeyPressedDown = false ;
-    public boolean KeyPressedRight = false ;
-    private int BubbleDelay;
-    
-    Timer save ;
-    private boolean OnLift = false ;
-    
+	public int speed = 0;
+	boolean breaks = true;
+	public boolean OnGround = true;
 
-    public Player(int x, int y, BufferedImage[] Player_Image , Mario g) {
-        
-        save = new Timer(1000);
-        
-        setLocation(x, y);
-        setImages(Player_Image);
-        setAnimate(false);
-        
-        
-        game = g; 
-        
-        this.setID(game.parent.MarioStatus);
-        this.SetStatus(game.parent.MarioStatus);
-        // System.out.println("game.parent.MarioStatus "+game.parent.MarioStatus +"Player getID "+this.getID());
-        
-        
-        //
-        BigBlackMario = game.bsLoader.getStoredImages("BigBlackMario");
-        FirePlayer = game.bsLoader.getStoredImages("FirePlayer");
-        BigGreenMario = game.bsLoader.getStoredImages("BigGreenMario");
-        BigRedMario = game.bsLoader.getStoredImages("BigRedMario");
-        
-          
-        SmallBlackMario = game.bsLoader.getStoredImages("SmallBlackMario");
-        player2 = game.bsLoader.getStoredImages("player");
-        SmallGreenMario = game.bsLoader.getStoredImages("SmallGreenMario");
-        SmallRedMario = game.bsLoader.getStoredImages("SmallRedMario");
-        
-        
-        
-        //
-        
-    }
+	float Gravity = 0;
 
-    // Most important part
-    
-    public void update(long l){
-        // gravity
-//        KeyPressedDown = false ;
-        
-        if(save.action(l)){
-        if(this.OnGround & !OnLift){
-            Sprite dis = new Sprite(game.PlayetX , game.PlayerY);
-            
-            if(this.getDistance(dis) > 1000){
-            game.PlayetX = (int) this.getX();
-            game.PlayerY = (int) this.getY();
-            }
-        }
-        }
-        OnLift = false ;
-        if(Water){
-            
-            // bubbles
-            AddBubbles();
-            
-            if(!this.OnGround){
-            swimmDelay--;
-                    if(swimmDelay <0){
-            Swim();
-            WaterJump();
-            swimmDelay = 4 ;
-                    }
-            }else{
-                if(this.speed > 30){
-                    this.speed = 30;
-                }else if(this.speed < -30){
-                    this.speed = -30;
-                }
-            }
-            
-            if(this.getY() < 32){
-                Gravity = 2;
-            }
-            
-            if(this.getY() < 64){
-                this.setY(64);
-            }
-        }
-        if(invincible > 0){ // decerease it
-            invincible--;
-        }
-        
-        AutomaticGoRight();
-        
-        this.moveX((float)speed / 10);
-        Gravity();
-        
-        this.moveY(Gravity);
-        
-        if(!Water){
-            
-        if(breaks){
-            if(speed < 0){
-                 speed = speed + 1 ;
-             }
-             else if(speed > 0){
-                 speed = speed - 1 ;
-                 
-             }
-        }
-        }
-        
-        else if(Water & !OnGround){
-        
-        
-        }else if(OnGround){
-            if(breaks){
-            if(speed < 0){
-                 speed = speed + 1 ;
-             }
-             else if(speed > 0){
-                 speed = speed - 1 ;
-                 
-             }
-        }
-        }
-        
-        something = something + speed ;
-        
-        if(OnGround){
-            
-        if(something > 80){
-            something = 0 ;
-            AdvanceFrame();
-        }
-        if(something < -80){
-            something = 0 ;
-            DeAdvanceFrame();
-        }
-        
-        }
-        if(speed == 0){
-            
-            if(LeftActivated && OnGround){
-            this.setFrame(1);
-            }else if(RightActivated && OnGround){
-            this.setFrame(0);
-            }
-            
-            
-        }
-        
-        if(this.KeyPressedDown){
-                if(LeftActivated){
-            this.setFrame(25);
-            }else if(RightActivated){
-            this.setFrame(24);
-            }
-            }
-        
-        OnGround = false ;
-        breaks = true ;
-        
-        
-        super.update(l);
-        
-        
-    }
-   
-        private void nextFrame() {
-        
-        if(currentFrame == 1){
-            currentFrame = 2;
-        }
-        else if(currentFrame == 2){
-            currentFrame = 3;
-        }
-        else if(currentFrame == 3){
-            currentFrame = 4;
-        }
-        else if(currentFrame == 4){
-            currentFrame = 1;
-        }
-        
-            
-    }
-    public void render(Graphics2D g) {
-       
-        if(invincible > 0){ // blink
-            
-            if(blink){
-            super.render(g);
-            
-            }
-            
-            if(blink){
-                blink = false ;
-            }
-            else {
-                blink = true ;
-            }
-        }
-        
-        else
-        {
-            super.render(g);
-        }
-        
-           
-        if(Star){
-        // star
-            
-        
-        Fps-- ;
-        if(Fps < 0){
-            nextFrame();
-            if(delay > 200 & delay < 510){
-                Fps = 2;
-            }else if(delay > 100 & delay < 200){
-                Fps = 5;
-            }else if(delay > -10 & delay < 100){
-                Fps = 10;
-            } 
-            
-        }
-        
-        delay-- ;
-        if(delay < 0){
-            game.player.HasStar(false);
-            game.bsMusic.stopAll();
-            game.playMusic("music/"+game.CurrentLevel.attribute+".mp3");
-        }
-        
-        if(this.getID() == 1){  // 
-        
-            if(currentFrame == 1){
-            g.drawImage(SmallBlackMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
-//                    this.setLocation(game.player.getX(),  (int)game.player.getY());
-        }
-        else if(currentFrame == 2){
-                        g.drawImage(player2[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	boolean turbo = false ;
+	private boolean LeftActivated = false;
+	private boolean RightActivated = true;
+	private boolean skating = false;
 
-        }
-        else if(currentFrame == 3){
-                        g.drawImage(SmallGreenMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	Mario game;
 
-        }
-        else if(currentFrame == 4){
-                        g.drawImage(SmallRedMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	int invincible = 0;
 
-        }
-          
-        }else {
-        if(currentFrame == 1){
-            g.drawImage(BigBlackMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	boolean blink = true;
+	private int Life = 0;
+	private boolean ControlleByKeyboard  = true;
+	private boolean AutomaticMoveForward = false;
+	private boolean Star;
+	public boolean KeyPressedDown  = false;
+	public boolean KeyPressedRight = false;
+	private int BubbleDelay;
 
-        }
-        else if(currentFrame == 2){
-            g.drawImage(FirePlayer[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	Timer save;
+	private boolean OnLift = false;
 
-        }
-        else if(currentFrame == 3){
-            g.drawImage(BigGreenMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+	//======================================================================================
+	public Player( int x, int y, BufferedImage[] Player_Image, Mario g )
+	{
+		System.out.println("+ Mario::Player::Player()");
 
-        }
-        else if(currentFrame == 4){
-            g.drawImage(BigRedMario[game.player.getFrame()] , null , (int)getScreenX(),  (int)getScreenY());
+		save = new Timer(1000);
 
-        }
-        
-        }
-        
-        }
-        //*********
-//        g.setColor(Color.WHITE);
-//                g.drawString("KeyPressRight " +KeyPressRight() + "        OnGround " + OnGround, 100, 10 );
-//        g.drawString("speed " + this.speed , 100, 10 );
-//        g.drawString("player pos  " + (int)this.getX()/32 , 100, 30 );
-    }
-        
-    public void GoToLeft() {
-        
-        if(ControlleByKeyboard & !KeyPressedDown){
-         
-        
-        if(speed > 0){
-            if(this.OnGround){
-            this.setFrame(11);
-            skating = true ;
-            }
-        }else{
-            if(this.OnGround){
-            skating = false ;
-            }
-        }
-        LeftActivated = true ;
-        RightActivated = false ;
-        if(turbo){
-          if(speed < -80){
-        speed = -80 ;
-        }else{
-            speed = speed - 4 ;
-        }  
-        }else{
-            
-        if(speed < -50){
-        speed = -50 ;
-        }else{
-            speed = speed - 2 ;
-        }
-        }
-        
-        breaks = false ;
-        
-        
-        
-        }
-    }
+		setLocation(x, y);
+		setImages( Player_Image );
+		setAnimate(false);
 
-    public void GoToRight() {
-        
-        
-        KeyPressedRight = true ;
-        if(ControlleByKeyboard & !KeyPressedDown){
-        
-            
-            
-        if(speed < 0){
-            if(this.OnGround){
-            this.setFrame(7);
-            skating = true ;
-            }
-        }else{
-            if(this.OnGround){
-            skating = false ;
-            }
-        }
-        
-        RightActivated = true ;
-        LeftActivated = false ;
-        if(turbo){
-        if(speed > 80){
-        speed = 80 ;
-        }else{
-            speed = speed + 4 ;
-        }
-        }else{
-          if(speed > 50){
-        speed = 50 ;
-        }else{
-            speed = speed + 2 ;
-        }  
-        }
-        
-        breaks = false ;
-        
-        }
-    }
+		game = g;
 
+		this.setID(     game.parent.MarioStatus );
+		this.SetStatus( game.parent.MarioStatus );
+		// System.out.println("game.parent.MarioStatus " + game.parent.MarioStatus + " Player getID " + this.getID() );
+
+		BigBlackMario = game.bsLoader.getStoredImages("BigBlackMario");
+		FirePlayer    = game.bsLoader.getStoredImages("FirePlayer"   );
+		BigGreenMario = game.bsLoader.getStoredImages("BigGreenMario");
+		BigRedMario   = game.bsLoader.getStoredImages("BigRedMario"  );
+
+		SmallBlackMario = game.bsLoader.getStoredImages("SmallBlackMario");
+		player2         = game.bsLoader.getStoredImages("player"         );
+		SmallGreenMario = game.bsLoader.getStoredImages("SmallGreenMario");
+		SmallRedMario   = game.bsLoader.getStoredImages("SmallRedMario"  );
+	}
+
+
+	//======================================================================================
+	// Most important part
+	//======================================================================================
+	public void update( long elapsedTime )
+	{
+		System.out.println("+ Mario::Player::update()");
+
+		// gravity
+		if ( save.action( elapsedTime ) )
+		{
+			if ( this.OnGround & !OnLift )
+			{
+				Sprite dis = new Sprite( game.PlayerX , game.PlayerY );
+
+				if ( this.getDistance(dis) > 1000 )
+				{
+					game.PlayerX = (int) this.getX();
+					game.PlayerY = (int) this.getY();
+				}
+			}
+		}
+
+		OnLift = false;
+
+		if ( Water )
+		{
+			// bubbles
+			AddBubbles();
+
+			if ( !this.OnGround )
+			{
+				swimmDelay--;
+				if ( swimmDelay < 0 )
+				{
+					Swim();
+					WaterJump();
+					swimmDelay = 4;
+				}
+			}
+			else
+			{
+				if      ( this.speed >  30 ) { this.speed =  30; }
+				else if ( this.speed < -30 ) { this.speed = -30; }
+			}
+			
+			if ( this.getY() < 32 ) { Gravity = 2; }
+			if ( this.getY() < 64 ) { this.setY(64); }
+		}
+
+		 // decerease it
+		if ( invincible > 0 ) { invincible--; }
+
+		AutomaticGoRight();
+
+		this.moveX( (float)speed / 10 );
+		Gravity();
+
+		this.moveY(Gravity);
+
+		if ( !Water )
+		{
+			if ( breaks )
+			{
+				if      ( speed < 0 ) { speed = speed + 1; }
+				else if ( speed > 0 ) { speed = speed - 1; }
+			}
+		}
+		else if ( Water & !OnGround ) {}
+		else if ( OnGround )
+		{
+			if ( breaks )
+			{
+				if      ( speed < 0 ) { speed = speed + 1; }
+				else if ( speed > 0 ) { speed = speed - 1; }
+			}
+		}
+
+		something = something + speed;
+
+		if ( OnGround )
+		{
+			if ( something > 80 )
+			{
+				something = 0;
+				AdvanceFrame();
+			}
+
+			if ( something < -80 )
+			{
+				something = 0;
+				DeAdvanceFrame();
+			}
+		}
+
+		if ( speed == 0 )
+		{
+			if      ( LeftActivated  && OnGround ) { this.setFrame(1); }
+			else if ( RightActivated && OnGround ) { this.setFrame(0); }
+		}
+
+		if ( this.KeyPressedDown )
+		{
+			if      ( LeftActivated  ) { this.setFrame(25); }
+			else if ( RightActivated ) { this.setFrame(24); }
+		}
+
+		OnGround = false;
+		breaks = true;
+
+		super.update( elapsedTime );
+	}
+
+	//======================================================================================
+	private void nextFrame()
+	{
+		System.out.println("+ Mario::Player::nextFrame()");
+
+		if      ( currentFrame == 1 ) { currentFrame = 2; }
+		else if ( currentFrame == 2 ) { currentFrame = 3; }
+		else if ( currentFrame == 3 ) { currentFrame = 4; }
+		else if ( currentFrame == 4 ) { currentFrame = 1; }
+	}
+
+	//======================================================================================
+	public void render( Graphics2D g )
+	{
+		System.out.println("+ Mario::Player::render()");
+
+		// blink
+		if ( invincible > 0 )
+		{
+			if ( blink ) { super.render(g); }
+
+			if ( blink ) { blink = false; }
+			else         { blink = true;  }
+		}
+		else { super.render(g); }
+
+		if ( Star )
+		{
+			// star
+			Fps--;
+			if ( Fps < 0 )
+			{
+				nextFrame();
+				if      ( delay > 200 & delay < 510 ) { Fps =  2; }
+				else if ( delay > 100 & delay < 200 ) { Fps =  5; }
+				else if ( delay > -10 & delay < 100 ) { Fps = 10; }
+			}
+
+			delay--;
+			if ( delay < 0 )
+			{
+				game.player.HasStar(false);
+				game.bsMusic.stopAll();
+				game.playMusic("music/" + game.CurrentLevel.attribute + ".mp3");
+			}
+
+			if ( this.getID() == 1 )
+			{
+				if      ( currentFrame == 1 ) { g.drawImage( SmallBlackMario[ game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 2 ) { g.drawImage( player2[         game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 3 ) { g.drawImage( SmallGreenMario[ game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 4 ) { g.drawImage( SmallRedMario[   game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+			}
+			else
+			{
+				if      ( currentFrame == 1 ) { g.drawImage( BigBlackMario[ game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 2 ) { g.drawImage( FirePlayer[    game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 3 ) { g.drawImage( BigGreenMario[ game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+				else if ( currentFrame == 4 ) { g.drawImage( BigRedMario[   game.player.getFrame() ], null, (int)getScreenX(), (int)getScreenY() ); }
+			}
+		}
+	}
+
+	//======================================================================================
+	public void GoToLeft()
+	{
+		System.out.println("+ Mario::Player::GoToLeft()");
+
+		if ( ControlleByKeyboard & !KeyPressedDown )
+		{
+			if ( speed > 0 )
+			{
+				if ( this.OnGround )
+				{
+					this.setFrame(11);
+					skating = true;
+				}
+			}
+			else
+			{
+				if ( this.OnGround ) { skating = false; }
+			}
+
+			LeftActivated  = true;
+			RightActivated = false;
+
+			if ( turbo )
+			{
+				if ( speed < -80 ) { speed = -80; }
+				else               { speed = speed - 4; }
+			}
+			else
+			{
+				if ( speed < -50 ) { speed = -50; }
+				else               { speed = speed - 2; }
+			}
+
+			breaks = false;
+		}
+	}
+
+	//======================================================================================
+	public void GoToRight()
+	{
+		System.out.println("+ Mario::Player::GoToRight()");
+
+		KeyPressedRight = true;
+
+		if ( ControlleByKeyboard & !KeyPressedDown )
+		{
+			if ( speed < 0 )
+			{
+				if ( this.OnGround )
+				{
+					this.setFrame(7);
+					skating = true;
+				}
+			}
+			else
+			{
+				if ( this.OnGround ) { skating = false; }
+			}
+
+			RightActivated = true;
+			LeftActivated  = false;
+
+			if ( turbo )
+			{
+				if ( speed > 80 ) { speed = 80; }
+				else              { speed = speed + 4; }
+			}
+			else
+			{
+				if ( speed > 50 ) { speed = 50; }
+				else              { speed = speed + 2 ; }
+			}
+
+			breaks = false;
+		}
+	}
+
+	//======================================================================================
     public void Down() {
         // release left and right keys 
         KeyPressedDown = true ;

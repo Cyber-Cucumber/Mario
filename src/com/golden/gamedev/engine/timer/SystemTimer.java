@@ -82,6 +82,7 @@ public class SystemTimer implements BaseTimer {
 	}
 	
 	public void stopTimer() {
+		System.out.println("+ Mario::SystemTimer::stopTimer()");
 		this.running = false;
 	}
 	
@@ -98,25 +99,23 @@ public class SystemTimer implements BaseTimer {
 		this.timeDiff = this.end - this.start;
 		this.sleepTime = (this.msDelay - this.timeDiff) - this.overSleepTime;
 		
-		if (this.sleepTime > 0) {
+		if ( this.sleepTime > 0 ) {
 			// some time left in this cycle
-			try {
-				Thread.sleep(this.sleepTime);
+			try
+			{
+				Thread.sleep( this.sleepTime );
 			}
-			catch (InterruptedException e) {
-			}
+			catch (InterruptedException e) {}
 			
-			this.overSleepTime = (System.currentTimeMillis() - this.end)
-			        - this.sleepTime;
-			
+			this.overSleepTime = (System.currentTimeMillis() - this.end) - this.sleepTime;
 		}
 		else { // sleepTime <= 0;
 			// give another thread a chance to run
-			try {
+			try
+			{
 				Thread.sleep(1);
 			}
-			catch (InterruptedException e) {
-			}
+			catch (InterruptedException e) {}
 			// Thread.yield();
 			
 			this.overSleepTime = 0;
@@ -136,35 +135,37 @@ public class SystemTimer implements BaseTimer {
 	/** ************************************************************************* */
 	
 	public boolean isRunning() {
+		System.out.println("+ Mario::SystemTimer::isRunning()");
 		return this.running;
 	}
 	
 	public int getCurrentFPS() {
+		System.out.println("+ Mario::SystemTimer::getCurrentFPS()");
 		return this.fpsCounter.getCurrentFPS();
 	}
 	
 	public int getFPS() {
+		System.out.println("+ Mario::SystemTimer::getFPS()");
 		return this.fps;
 	}
 	
-	public void setFPS(int fps) {
-		if (this.fps == fps) {
-			return;
-		}
+	public void setFPS(int fps)
+	{
+		System.out.println("+ Mario::SystemTimer::setFPS() --- fps: " + fps );
+		if (this.fps == fps) { return; }
+
 		this.fps = fps;
-		
-		if (this.running) {
-			this.startTimer();
-		}
+		if (this.running) { this.startTimer(); }
 	}
 	
 	public long getTime() {
+		System.out.println("+ Mario::SystemTimer::getTime()");
 		return System.currentTimeMillis();
 	}
 	
 	public void refresh() {
+		System.out.println("+ Mario::SystemTimer::refresh()");
 		this.start = System.currentTimeMillis();
 		this.overSleepTime = 0;
 	}
-	
 }

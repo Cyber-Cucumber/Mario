@@ -10,8 +10,8 @@ import Teleport.Teleport;
 import java.awt.Point;
 import java.util.Random;
 
-public abstract class BasicLevel {
-    
+public abstract class BasicLevel
+{
     public int LevelLength ;
     // Nothing , Water , Wall ,overWater , Night , Snow , NightAndSnow , Castle
     public String BackGroundColor ;
@@ -104,25 +104,18 @@ public abstract class BasicLevel {
 //        // System.out.println(Items);
         
         checkPoints_Amount++ ;
-        
     }
     
     public void AddPrincess(int x, int y ){
-
         Princess princess = new Princess( x*32, y*32 , 11 , new Point(3,6) );
                 
         checkPoints[this.checkPoints_Amount] = princess ;
 //        // System.out.println(Items);
         
         checkPoints_Amount++ ;
-        
     }
     
-    
-    
-    
-        public void Add(String type, int x, int y, int LenX, int LenY , int Length){
-
+    public void Add(String type, int x, int y, int LenX, int LenY , int Length){
         Construct temp = new Construct();
         temp.setItem_Type(type);
         temp.setX(x);
@@ -135,11 +128,9 @@ public abstract class BasicLevel {
 //        // System.out.println(Items);
         
         Items++ ;
-        
     }
         
     public void Add(String type, int x, int y, int LenX, int LenY){
-
         Construct temp = new Construct();
         temp.setItem_Type(type);
         temp.setX(x);
@@ -151,7 +142,6 @@ public abstract class BasicLevel {
 //        // System.out.println(Items);
         
         Items++ ;
-        
     }
 
     public void Add(String type, int x, int y, int LenX, int LenY, String rotation) {
@@ -167,10 +157,9 @@ public abstract class BasicLevel {
 //        // System.out.println(Items);
         
         Items++ ;
-        
     }
     
-        public void AddTeleport(int INx, int INy, int OUTx, int OUTy) {
+    public void AddTeleport(int INx, int INy, int OUTx, int OUTy) {
         Teleport temp = new Teleport();
         temp.setINx(INx*32);
         temp.setINy(INy*32);
@@ -178,12 +167,9 @@ public abstract class BasicLevel {
         temp.setOUTy(OUTy*32);
                 System.out.println(Items);
         teleport[Teleport_Items] = temp ;
-         
-        
-        Teleport_Items++ ;
-        
-    }
 
+        Teleport_Items++ ;
+    }
     
     public void AddCastle(int x, int y, String size) {
         if("small".equals(size)){
@@ -194,13 +180,10 @@ public abstract class BasicLevel {
         }
     }
     
-        // x , y , height , EndAt
+    // x , y , height , EndAt
     public void AddBrick(int x, int y, int height, int EndAt) {
-        
         Add("Brick" , x , y , EndAt- x , height ) ;
-        
     }
-    
     
     public void AddQuestionMark(int x, int y, int height, int EndAt) {
         Add("QuestionMark" , x , y , EndAt- x , height ) ;
@@ -562,15 +545,4 @@ public abstract class BasicLevel {
 //        out.close();
 //        
 //    }
-
-    
-
-    
-
-    
-
-    
-
-
-    
 }

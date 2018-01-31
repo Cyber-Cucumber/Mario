@@ -32,8 +32,8 @@ package com.golden.gamedev.engine.timer;
  * }
  * </pre>
  */
-public class FPSCounter {
-	
+public class FPSCounter
+{
 	private long lastCount; // last time the fps is counted
 	private int currentFPS, // the real fps achieved
 	        frameCount;
@@ -53,6 +53,7 @@ public class FPSCounter {
 	 * start counting from current time.
 	 */
 	public void refresh() {
+		System.out.println("+ Mario::FPSCounter::refresh()");
 		this.frameCount = 0;
 		this.lastCount = System.currentTimeMillis();
 	}
@@ -60,7 +61,9 @@ public class FPSCounter {
 	/**
 	 * The main method that calculating the frame per second.
 	 */
-	public void calculateFPS() {
+	public void calculateFPS()
+	{
+		System.out.println("+ Mario::FPSCounter::calculateFPS()");
 		this.frameCount++;
 		if (System.currentTimeMillis() - this.lastCount > 1000) {
 			this.lastCount = System.currentTimeMillis();
@@ -75,6 +78,7 @@ public class FPSCounter {
 	 * @see #calculateFPS()
 	 */
 	public int getCurrentFPS() {
+		System.out.println("+ Mario::FPSCounter::getCurrentFPS()");
 		return this.currentFPS;
 	}
 	

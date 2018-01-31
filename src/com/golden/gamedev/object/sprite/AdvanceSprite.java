@@ -123,15 +123,12 @@ public class AdvanceSprite extends AnimatedSprite {
 	 * 
 	 * @see #setAnimationFrame(int, int)
 	 */
-	public void setAnimationFrame(int[] animation) {
-		if (this.animationFrame != animation) {
+	public void setAnimationFrame(int[] animation)
+	{
+		if (this.animationFrame != animation)
+		{
 			this.animationFrame = animation;
-			
-			this
-			        .setAnimationFrame(
-			                0,
-			                (this.animationFrame != null) ? (this.animationFrame.length - 1)
-			                        : (this.getImages().length - 1));
+			this.setAnimationFrame( 0, (this.animationFrame != null) ? (this.animationFrame.length - 1) : (this.getImages().length - 1));
 		}
 	}
 	
@@ -148,8 +145,7 @@ public class AdvanceSprite extends AnimatedSprite {
 	/** ************************************************************************* */
 	
 	public BufferedImage getImage() {
-		return (this.animationFrame == null) ? super.getImage() : this
-		        .getImage(this.animationFrame[this.getFrame()]);
+		return (this.animationFrame == null) ? super.getImage() : this.getImage(this.animationFrame[this.getFrame()]);
 	}
 	
 	public void setImages(BufferedImage[] image) {
@@ -266,16 +262,12 @@ public class AdvanceSprite extends AnimatedSprite {
 	/** ************************************************************************* */
 	/** ************************** RENDER SPRITE ******************************** */
 	/** ************************************************************************* */
-	
-	public void render(Graphics2D g, int xs, int ys) {
-		if (this.animationFrame != null) {
-			g.drawImage(this.getImage(this.animationFrame[this.getFrame()]),
-			        xs, ys, null);
-			
+	public void render( Graphics2D g, int xs, int ys )
+	{
+		if (this.animationFrame != null)
+		{
+			g.drawImage( this.getImage(this.animationFrame[this.getFrame()] ), xs, ys, null );
 		}
-		else {
-			super.render(g, xs, ys);
-		}
+		else { super.render(g, xs, ys); }
 	}
-	
 }

@@ -345,23 +345,15 @@ public class Sprite implements java.io.Serializable {
 	/**
 	 * Moves this sprite as far as delta x (dx) and delta y (dy).
 	 */
-	public void move(double dx, double dy) {
-		if (dx != 0 || dy != 0) {
+	public void move( double dx, double dy )
+	{
+		if ( dx != 0 || dy != 0 )
+		{
 			this.oldX = this.x;
-			this.x += dx;
 			this.oldY = this.y;
+			this.x += dx;
 			this.y += dy;
 		}
-		
-		// if (dx != 0) {
-		// oldX = x;
-		// x += dx;
-		// }
-		//
-		// if (dy != 0) {
-		// oldY = y;
-		// y += dy;
-		// }
 	}
 	
 	/**
@@ -696,16 +688,17 @@ public class Sprite implements java.io.Serializable {
 	/**
 	 * Updates this sprite.
 	 */
-	public void update(long elapsedTime) {
-		this.updateMovement(elapsedTime);
+	public void update( long elapsedTime )
+	{
+		this.updateMovement( elapsedTime );
 	}
 	
 	/**
 	 * Updates sprite movement.
 	 */
-	protected void updateMovement(long elapsedTime) {
-		this.move(this.horizontalSpeed * elapsedTime, this.verticalSpeed
-		        * elapsedTime);
+	protected void updateMovement( long elapsedTime )
+	{
+		this.move( this.horizontalSpeed * elapsedTime, this.verticalSpeed * elapsedTime );
 	}
 	
 	/** ************************************************************************* */
@@ -717,7 +710,10 @@ public class Sprite implements java.io.Serializable {
 	 * 
 	 * @param g graphics context
 	 */
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g)
+	{
+//		System.out.println("+ Mario::Sprite::render() --- Name: " + this.getClass() );
+
 		Sprite.screenX = this.x - this.background.getX();
 		Sprite.screenY = this.y - this.background.getY();
 		
@@ -732,7 +728,7 @@ public class Sprite implements java.io.Serializable {
 		Sprite.screenX += this.background.getClip().x;
 		Sprite.screenY += this.background.getClip().y;
 		
-		this.render(g, (int) Sprite.screenX, (int) Sprite.screenY);
+		this.render( g, (int) Sprite.screenX, (int) Sprite.screenY );
 	}
 	
 	/**

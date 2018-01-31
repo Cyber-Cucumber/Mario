@@ -353,12 +353,14 @@ public class PlayField {
 	 * Renders background, and sprite groups (with/without
 	 * {@linkplain #setComparator(Comparator) comparator}).
 	 */
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g)
+	{
+		System.out.println("+ Mario::PlayField::render()");
+
 		this.renderBackground(g);
 		
 		if (this.comparator == null) {
 			this.renderSpriteGroups(g);
-			
 		}
 		else {
 			this.renderSpriteGroups(g, this.comparator);
@@ -375,9 +377,14 @@ public class PlayField {
 	/**
 	 * Renders sprite groups to specified graphics context.
 	 */
-	protected void renderSpriteGroups(Graphics2D g) {
-		for (int i = 0; i < this.groups.length; i++) {
-			if (this.groups[i].isActive()) {
+	protected void renderSpriteGroups( Graphics2D g )
+	{
+//		System.out.println("+ Mario::PlayField::renderSpriteGroups(Graphics2D)");
+		for ( int i = 0; i < this.groups.length; i++ )
+		{
+			if ( this.groups[i].isActive() )
+			{
+//				System.out.println("+ Mario::PlayField::renderSpriteGroups(Graphics2D) --- SpriteGroup: " + groups[i].getName() );
 				this.groups[i].render(g);
 			}
 		}
@@ -396,7 +403,10 @@ public class PlayField {
 	 * the cache will hold the sprites forever and makes the sprite can't be
 	 * disposed.
 	 */
-	protected void renderSpriteGroups(Graphics2D g, Comparator c) {
+	protected void renderSpriteGroups( Graphics2D g, Comparator c )
+	{
+		System.out.println("+ Mario::PlayField::renderSpriteGroups(Graphics2D,Comparator)");
+
 		int num = 0, len = this.cacheSprite.length;
 		
 		if (len == 0) {

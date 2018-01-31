@@ -295,15 +295,16 @@ public class AnimatedSprite extends Sprite {
 	/** ************************************************************************* */
 	/** *************************** UPDATE SPRITE ******************************* */
 	/** ************************************************************************* */
-	
-	public void update(long elapsedTime) {
-		super.update(elapsedTime);
-		
-		if (this.animate && this.animationTimer.action(elapsedTime)) {
+	public void update( long elapsedTime )
+	{
+		super.update( elapsedTime );
+
+		if ( this.animate && this.animationTimer.action( elapsedTime ) )
+		{
 			this.updateAnimation();
 		}
 	}
-	
+
 	/**
 	 * Updates sprite animation.
 	 * <p>
@@ -314,24 +315,24 @@ public class AnimatedSprite extends Sprite {
 	 * first animation frame}, and stop the animation if the animation is not
 	 * set to {@linkplain #isLoopAnim() loop continously}.
 	 */
-	protected void updateAnimation() {
-		if (++this.frame > this.finishFrame) {
+	protected void updateAnimation()
+	{
+		if ( ++this.frame > this.finishFrame )
+		{
 			this.frame = this.startFrame;
-			
-			if (!this.loopAnim) {
-				this.animate = false;
-			}
+
+			if ( !this.loopAnim ) { this.animate = false; }
 		}
 	}
-	
+
 	/** ************************************************************************* */
 	/** ************************** RENDER SPRITE ******************************** */
 	/** ************************************************************************* */
-	
-	public void render(Graphics2D g, int xs, int ys) {
-		g.drawImage(this.image[this.frame], xs, ys, null);
+	public void render( Graphics2D g, int xs, int ys )
+	{
+		g.drawImage( this.image[ this.frame ], xs, ys, null );
 	}
-	
+
 	/** ************************************************************************* */
 	/** ************************** SPRITE PROPERTIES **************************** */
 	/** ************************************************************************* */

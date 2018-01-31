@@ -7,23 +7,22 @@ import com.golden.gamedev.object.Timer;
 import com.golden.gamedev.object.sprite.AdvanceSprite;
 import java.awt.image.BufferedImage;
 
-public class Coin extends  AdvanceSprite implements BasicEnemy{
-
+public class Coin extends AdvanceSprite implements BasicEnemy
+{
     Mario game ;
     
     public Coin(int x, int y, BufferedImage[] storedImages, Mario M) {
         setLocation(x, y);
         setImages(storedImages);
-        int[] animation = { 0 , 0 ,0 ,0 , 1 , 2 , 1 , 0 };
+        int[] animation = { 0, 0, 0, 0, 1, 2, 1, 0 };
         this.setAnimationFrame(animation);
         this.setAnimate(true);
         this.setLoopAnim(true);
-        this.setAnimationTimer(new Timer(150));
+        this.setAnimationTimer( new Timer(150) );
         
         game = M ;
         
         this.setID(21);
-        
     }
 
     public void CollidedWithBrick_GoToLeft() {
@@ -40,8 +39,6 @@ public class Coin extends  AdvanceSprite implements BasicEnemy{
         super.setActive(false);
          game.parent.CoinInc();
     }
-
-
 
     public void KilledByFireBall() {
     }
@@ -81,23 +78,20 @@ public class Coin extends  AdvanceSprite implements BasicEnemy{
     }
 
     public void CollidedWithJumping_Brick() {
-        
        game.AnimationGroup.add(new CoinAnim( (int)this.getX() , (int)this.getY() , game.bsLoader.getStoredImages("CoinAnim") , game));
 
         this.setActive(false);
          game.parent.CoinInc();
     }
 
-        public boolean MariotoRight() {
-        boolean positive ;
-        if(game.player.getX() < this.getX()){
-            positive = false ;
-        }else{
-            positive = true ;
-        }
-        
-        return positive;
+    public boolean MariotoRight() {
+	    boolean positive ;
+	    if(game.player.getX() < this.getX()){
+	        positive = false ;
+	    }else{
+	        positive = true ;
+	    }
+	    
+	    return positive;
     }
-
-    
 }

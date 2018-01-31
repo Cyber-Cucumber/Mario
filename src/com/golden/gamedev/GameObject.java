@@ -55,10 +55,8 @@ import com.golden.gamedev.util.Utility;
  * @see com.golden.gamedev.GameEngine
  * @see com.golden.gamedev.Game
  */
-public abstract class GameObject {
-    
-    
-	
+public abstract class GameObject
+{
 	/** **************************** MASTER ENGINE ****************************** */
 	
 	/**
@@ -104,20 +102,24 @@ public abstract class GameObject {
 	 * Creates new <code>GameObject</code> with specified
 	 * <code>GameEngine</code> as the master engine.
 	 */
-	public GameObject(GameEngine parent) {
+	public GameObject(GameEngine parent)
+	{
+		System.out.println("+ Mario::GameObject::GameObject()");
 		this.parent = parent;
-		
 		this.grabEngines();
 	}
 	
-	private void grabEngines() {
+	private void grabEngines()
+	{
+		System.out.println("+ Mario::GameObject::grabEngines()");
+
 		this.bsGraphics = this.parent.bsGraphics;
-		this.bsIO = this.parent.bsIO;
-		this.bsLoader = this.parent.bsLoader;
-		this.bsInput = this.parent.bsInput;
-		this.bsTimer = this.parent.bsTimer;
-		this.bsMusic = this.parent.bsMusic;
-		this.bsSound = this.parent.bsSound;
+		this.bsIO       = this.parent.bsIO;
+		this.bsLoader   = this.parent.bsLoader;
+		this.bsInput    = this.parent.bsInput;
+		this.bsTimer    = this.parent.bsTimer;
+		this.bsMusic    = this.parent.bsMusic;
+		this.bsSound    = this.parent.bsSound;
 		
 		this.fontManager = this.parent.fontManager;
 	}
@@ -127,7 +129,10 @@ public abstract class GameObject {
 	 * finished playing/running. To end the game call {@linkplain #finish()}
 	 * method.
 	 */
-	public final void start() {
+	public final void start()
+	{
+		System.out.println("+ Mario::GameObject::start()");
+
 		// grabbing engines from master engine
 		this.grabEngines();
 		GameFont fpsFont = this.parent.fpsFont;
@@ -147,15 +152,19 @@ public abstract class GameObject {
 		this.bsTimer.refresh();
 		
 		long elapsedTime = 0;
-		out: while (true) {
-				// update game
-				this.update(elapsedTime);
-				this.parent.update(elapsedTime); // update common variables
-				this.bsInput.update(elapsedTime);
-			
-			
-			do {
-				if (this.finish || !this.parent.isRunning()) {
+		out: while (true)
+		{
+			System.out.println("+ Mario::GameObject::start() --- Looooooooop");
+
+			// update game
+			this.update(elapsedTime);
+			this.parent.update(elapsedTime); // update common variables
+			this.bsInput.update(elapsedTime);
+
+			do
+			{
+				if ( this.finish || !this.parent.isRunning() )
+				{
 					// if finish, quit this game
 					break out;
 				}

@@ -76,8 +76,10 @@ public class Timer implements Serializable {
 	 * 
 	 * @param elapsedTime time elapsed since last update
 	 */
-	public boolean action(long elapsedTime) {
-		if (this.active) {
+	public boolean action( long elapsedTime )
+	{
+		if (this.active)
+		{
 			this.currentTick += elapsedTime;
 			if (this.currentTick >= this.delay) {
 				// time elapsed!

@@ -19,6 +19,7 @@ package com.golden.gamedev.object;
 // JFC
 import Objects.MovingHelmetShell;
 import Objects.MovingTurtelShell;
+
 import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -280,26 +281,33 @@ public class SpriteGroup {
 	 * 
 	 * @see #getScanFrequence()
 	 */
-	public void update(long elapsedTime) {
-		for (int i = 0; i < this.size; i++) {
-			if (this.sprites[i].isActive()) {
-                            
-                            if(this.sprites[i] instanceof MovingTurtelShell | this.sprites[i] instanceof MovingHelmetShell){
-                                this.sprites[i].update(elapsedTime);
-                            }else {
-                            if(this.sprites[i].getScreenX() > - 500 &&
-                                    this.sprites[i].getScreenX() < 800){
-                                this.sprites[i].update(elapsedTime);
-                            
-                            }
-                            }
-                            if(this.sprites[i].getY() < -1000 || this.sprites[i].getY() > 1500 ){
-                                this.sprites[i].setActive(false);
-                            }
+	public void update( long elapsedTime )
+	{
+		for ( int i = 0; i < this.size; i++ )
+		{
+			if ( this.sprites[i].isActive() )
+			{
+				if ( this.sprites[i] instanceof MovingTurtelShell | this.sprites[i] instanceof MovingHelmetShell )
+				{
+					this.sprites[i].update( elapsedTime );
+				}
+				else
+				{
+					if ( this.sprites[i].getScreenX() > -500 && this.sprites[i].getScreenX() < 800 )
+					{
+						this.sprites[i].update( elapsedTime );
+					}
+				}
+
+				if ( this.sprites[i].getY() < -1000 || this.sprites[i].getY() > 1500 )
+				{
+					this.sprites[i].setActive(false);
+				}
 			}
 		}
-		
-		if (this.scanFrequence.action(elapsedTime)) {
+
+		if ( this.scanFrequence.action( elapsedTime ) )
+		{
 			// remove all inactive sprites
 			this.removeInactiveSprites();
 		}
@@ -397,7 +405,9 @@ public class SpriteGroup {
 	 * 
 	 * @see #setComparator(Comparator)
 	 */
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g)
+	{
+//		System.out.println("+ Mario::SpriteGroup::render()");
 		if (this.comparator != null) {
 			// sort sprite before render
 			this.sort(this.comparator);
@@ -405,6 +415,7 @@ public class SpriteGroup {
 		
 		for (int i = 0; i < this.size; i++) {
 			if (this.sprites[i].isActive()) {
+//				System.out.println("+ Mario::SpriteGroup::render() --- Sprite: " + sprites[i].getClass() );
 				// renders only active sprite
 				this.sprites[i].render(g);
 			}

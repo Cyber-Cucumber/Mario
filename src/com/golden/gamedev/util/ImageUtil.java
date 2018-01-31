@@ -43,11 +43,9 @@ import javax.imageio.ImageIO;
 /**
  * Utility class for creating, loading, and manipulating image.
  */
-public class ImageUtil {
-	
-	public static final GraphicsConfiguration CONFIG = GraphicsEnvironment
-	        .getLocalGraphicsEnvironment().getDefaultScreenDevice()
-	        .getDefaultConfiguration();
+public class ImageUtil
+{
+	public static final GraphicsConfiguration CONFIG = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 	
 	private static final MediaTracker tracker;
 	static {
@@ -206,8 +204,7 @@ public class ImageUtil {
 	 */
 	public static BufferedImage createImage(int width, int height, int transparency) {
 		// return new BufferedImage(width, height, transparency);
-		return ImageUtil.CONFIG.createCompatibleImage(width, height,
-		        transparency);
+		return ImageUtil.CONFIG.createCompatibleImage( width, height, transparency );
 	}
 	
         public static BufferedImage createImage(int width, int height, Color color) {

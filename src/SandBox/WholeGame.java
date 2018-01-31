@@ -33,9 +33,9 @@ public class WholeGame extends GameEngine
 
 	public GameObject getGame(int GameID)
 	{
-		System.out.println("+ Mario::WholeGame::getGame()");
+		System.out.println("+ Mario::WholeGame::getGame() --- GameID: " + GameID );
 //		System.out.println(GameID);
-		return new Mario( this ,nextGameID );
+		return new Mario( this, nextGameID );
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException, IOException

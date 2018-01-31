@@ -221,8 +221,7 @@ public class FullScreenMode implements BaseGraphics, Comparator {
 			this.offscreen = null;
 		}
 		
-		this.offscreen = FullScreenMode.CONFIG.createCompatibleVolatileImage(
-		        this.size.width, this.size.height);
+		this.offscreen = FullScreenMode.CONFIG.createCompatibleVolatileImage( this.size.width, this.size.height );
 	}
 	
 	public Graphics2D getBackBuffer() {
@@ -243,8 +242,7 @@ public class FullScreenMode implements BaseGraphics, Comparator {
 			}
 			else {
 				// using buffer strategy
-				this.currentGraphics = (Graphics2D) this.strategy
-				        .getDrawGraphics();
+				this.currentGraphics = (Graphics2D) this.strategy.getDrawGraphics();
 			}
 		}
 		
